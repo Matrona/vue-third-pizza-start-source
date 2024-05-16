@@ -1,0 +1,28 @@
+<template>
+  <div :draggable="true" @dragstart.self="onDragStart" @dragover.prevent @dragenter.prevent>
+    <slot />
+  </div>
+</template>
+
+<script setup>
+import { DATA_TRANSFER_PAYLOAD } from '../constants'
+
+const props = defineProps({
+  draggable: {
+    type: Boolean,
+    default: false,
+  },
+  dataTransfer: {
+    type: Object,
+    required: true,
+  },
+})
+
+function onDragStart({ dataTransfer }) {
+  const data = JSON.stringify(props.dataTransfer);
+  dataTransfer.setData(DATA_TRANSFER_PAYLOAD, data);
+}
+
+// Метод onDragStart добавляет данные о переносимом объекте в DataTransfer. Более подробно о DataTransfer можно прочитать на MDN.
+
+</script>
